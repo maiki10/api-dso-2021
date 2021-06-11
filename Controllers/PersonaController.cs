@@ -22,6 +22,7 @@ namespace ApiEstudiantes.Controllers
         [HttpGet]
         public ActionResult GetAll()
         {
+
             return Ok(context.persona.ToList());
         }
     }
