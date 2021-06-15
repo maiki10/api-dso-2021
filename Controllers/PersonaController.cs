@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ApiEstudiantes.Context;
-
+using ApiEstudiantes.Models;
 
 namespace ApiEstudiantes.Controllers
 {
@@ -23,7 +23,43 @@ namespace ApiEstudiantes.Controllers
         public ActionResult GetAll()
         {
 
-            return Ok(context.persona.ToList());
+            try
+            {
+                return Ok(context.persona.ToList());
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpGet("{id}", Name = "GetById")]
+        public ActionResult GetById(int id)
+        {
+
+            try
+            {
+                var persona = context.persona.FirstOrDefault(persona => persona.id == id);
+                return Ok(persona);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpPost]
+        public ActionResult Post([FromBody]Persona persona)
+        {
+            try
+            {
+                context.persona.Add(persona);
+                context.SaveChanges();
+                return CreatedAtRoute("GetById", new { persona.id }, persona);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }
