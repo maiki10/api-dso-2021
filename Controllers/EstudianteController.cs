@@ -1,5 +1,4 @@
-﻿
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -9,14 +8,15 @@ using ApiEstudiantes.Context;
 using ApiEstudiantes.Models;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace ApiEstudiantes.Controllers
 {
-    [Route("api/v1/[controller]")]
+    [Route("api/[controller]")]
     [ApiController]
-    public class PersonaController : ControllerBase
+    public class EstudianteController : ControllerBase
     {
         private readonly AppDbContext context;
-        public PersonaController(AppDbContext _context)
+        public EstudianteController(AppDbContext _context)
         {
             this.context = _context;
         }
@@ -26,7 +26,7 @@ namespace ApiEstudiantes.Controllers
 
             try
             {
-                return Ok(context.persona.ToList());
+                return Ok(context.estudiante.ToList());
             }
             catch (Exception ex)
             {
@@ -39,8 +39,8 @@ namespace ApiEstudiantes.Controllers
 
             try
             {
-                var persona = context.persona.FirstOrDefault(persona => persona.id == id);
-                return Ok(persona);
+                var estudiante = context.estudiante.FirstOrDefault(estudiante => estudiante.id == id);
+                return Ok(estudiante);
             }
             catch (Exception ex)
             {
@@ -49,13 +49,13 @@ namespace ApiEstudiantes.Controllers
         }
 
         [HttpPost]
-        public ActionResult Post([FromBody] Persona persona)
+        public ActionResult Post([FromBody] Estudiante estudiante)
         {
             try
             {
-                context.persona.Add(persona);
+                context.estudiante.Add(estudiante);
                 context.SaveChanges();
-                return CreatedAtRoute("GetById", new { persona.id }, persona);
+                return CreatedAtRoute("GetById", new { estudiante.id }, estudiante);
             }
             catch (Exception ex)
             {
@@ -64,15 +64,15 @@ namespace ApiEstudiantes.Controllers
         }
 
         [HttpPut("{id}")]
-        public ActionResult Put(int id, [FromBody] Persona persona)
+        public ActionResult Put(int id, [FromBody] Estudiante estudiante)
         {
             try
             {
-                if (persona.id == id)
+                if (estudiante.id == id)
                 {
-                    context.Entry(persona).State = EntityState.Modified;
+                    context.Entry(estudiante).State = EntityState.Modified;
                     context.SaveChanges();
-                    return CreatedAtRoute("GetById", new { id = persona.id }, persona);
+                    return CreatedAtRoute("GetById", new { id = estudiante.id }, estudiante);
                 }
                 else
                 {
@@ -90,10 +90,10 @@ namespace ApiEstudiantes.Controllers
         {
             try
             {
-                var persona = context.persona.FirstOrDefault(p => p.id == id);
-                if (persona != null)
+                var estudiante = context.estudiante.FirstOrDefault(p => p.id == id);
+                if (estudiante != null)
                 {
-                    context.persona.Remove(persona);
+                    context.estudiante.Remove(estudiante);
                     context.SaveChanges();
                     return Ok(id);
                 }
@@ -102,10 +102,12 @@ namespace ApiEstudiantes.Controllers
                     return BadRequest();
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-              return  BadRequest(ex.Message);
+                return BadRequest(ex.Message);
             }
         }
+
+
     }
 }
