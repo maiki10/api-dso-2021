@@ -17,6 +17,10 @@ namespace ApiEstudiantes.Context
             public DbSet<Persona> persona { get; set; }
             public DbSet<Estudiante> estudiante { get; set; }
             public DbSet<Carrera> carrera { get; set; }
+            
+            public DbSet<TipoUsuario> tipoUsuario { get; set; }
+
+            public DbSet<Usuario> usuario { get; set; }
 
 
         }
