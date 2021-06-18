@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ApiEstudiantes.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class TipoUsuarioController : ControllerBase
     {
@@ -32,7 +32,7 @@ namespace ApiEstudiantes.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpGet("{id}", Name = "GetById")]
+        [HttpGet("{id}", Name = "etById")]
         public ActionResult GetById(int id)
         {
 
@@ -54,7 +54,7 @@ namespace ApiEstudiantes.Controllers
             {
                 context.tipoUsuario.Add(tipoUsuario);
                 context.SaveChanges();
-                return CreatedAtRoute("GetById", new { tipoUsuario.id }, tipoUsuario);
+                return CreatedAtRoute("etById", new { tipoUsuario.id }, tipoUsuario);
             }
             catch (Exception ex)
             {
@@ -71,7 +71,7 @@ namespace ApiEstudiantes.Controllers
                 {
                     context.Entry(tipoUsuario).State = EntityState.Modified;
                     context.SaveChanges();
-                    return CreatedAtRoute("GetById", new { id = tipoUsuario.id }, tipoUsuario);
+                    return CreatedAtRoute("etById", new { id = tipoUsuario.id }, tipoUsuario);
                 }
                 else
                 {

@@ -10,7 +10,7 @@ namespace ApiEstudiantes.Models
     {
         [Key]
         public int id { get; set; }
-        public int nombre { get; set; }
+        public string nombre { get; set; }
         public bool estado { get; set; }
     }
 }

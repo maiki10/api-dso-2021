@@ -7,9 +7,10 @@ using System.Threading.Tasks;
 using ApiEstudiantes.Context;
 using ApiEstudiantes.Models;
 using Microsoft.EntityFrameworkCore;
+
 namespace ApiEstudiantes.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class UsuarioController : ControllerBase
     {
@@ -32,13 +33,13 @@ namespace ApiEstudiantes.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpGet("{id}", Name = "GetById")]
+        [HttpGet("{id}", Name = "GtById")]
         public ActionResult GetById(int id)
         {
 
             try
             {
-                var usuario = context.usuario.FirstOrDefault(usuario=> usuario.id == id);
+                var usuario = context.usuario.FirstOrDefault(usuario => usuario.id == id);
                 return Ok(usuario);
             }
             catch (Exception ex)
@@ -54,7 +55,7 @@ namespace ApiEstudiantes.Controllers
             {
                 context.usuario.Add(usuario);
                 context.SaveChanges();
-                return CreatedAtRoute("GetById", new { usuario.id }, usuario);
+                return CreatedAtRoute("GtById", new { usuario.id }, usuario);
             }
             catch (Exception ex)
             {
@@ -71,7 +72,7 @@ namespace ApiEstudiantes.Controllers
                 {
                     context.Entry(usuario).State = EntityState.Modified;
                     context.SaveChanges();
-                    return CreatedAtRoute("GetById", new { id = usuario.id }, usuario);
+                    return CreatedAtRoute("GtById", new { id = usuario.id }, usuario);
                 }
                 else
                 {

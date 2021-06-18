@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,7 +12,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ApiEstudiantes.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class EstudianteController : ControllerBase
     {
@@ -26,14 +27,14 @@ namespace ApiEstudiantes.Controllers
 
             try
             {
-                return Ok(context.estudiante.ToList());
+                return Ok(context.estudiante.Include(e => e.persona).ToList());
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
-        [HttpGet("{id}", Name = "GetById")]
+        [HttpGet("{id}", Name = "GetByI")]
         public ActionResult GetById(int id)
         {
 
@@ -55,7 +56,7 @@ namespace ApiEstudiantes.Controllers
             {
                 context.estudiante.Add(estudiante);
                 context.SaveChanges();
-                return CreatedAtRoute("GetById", new { estudiante.id }, estudiante);
+                return CreatedAtRoute("GetByI", new { estudiante.id }, estudiante);
             }
             catch (Exception ex)
             {
@@ -72,7 +73,7 @@ namespace ApiEstudiantes.Controllers
                 {
                     context.Entry(estudiante).State = EntityState.Modified;
                     context.SaveChanges();
-                    return CreatedAtRoute("GetById", new { id = estudiante.id }, estudiante);
+                    return CreatedAtRoute("GetByI", new { id = estudiante.id }, estudiante);
                 }
                 else
                 {

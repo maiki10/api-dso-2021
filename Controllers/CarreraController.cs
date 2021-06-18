@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -7,9 +8,10 @@ using System.Threading.Tasks;
 using ApiEstudiantes.Context;
 using ApiEstudiantes.Models;
 using Microsoft.EntityFrameworkCore;
+
 namespace ApiEstudiantes.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/v1/[controller]")]
     [ApiController]
     public class CarreraController : ControllerBase
     {
@@ -31,7 +33,7 @@ namespace ApiEstudiantes.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpGet("{id}", Name = "GetById")]
+        [HttpGet("{id}", Name = "GetBId")]
         public ActionResult GetById(int id)
         {
 
@@ -53,7 +55,7 @@ namespace ApiEstudiantes.Controllers
             {
                 context.carrera.Add(carrera);
                 context.SaveChanges();
-                return CreatedAtRoute("GetById", new { carrera.id }, carrera);
+                return CreatedAtRoute("GetBId", new { carrera.id }, carrera);
             }
             catch (Exception ex)
             {
@@ -70,7 +72,7 @@ namespace ApiEstudiantes.Controllers
                 {
                     context.Entry(carrera).State = EntityState.Modified;
                     context.SaveChanges();
-                    return CreatedAtRoute("GetById", new { id = carrera.id }, carrera);
+                    return CreatedAtRoute("GetBId", new { id = carrera.id }, carrera);
                 }
                 else
                 {
