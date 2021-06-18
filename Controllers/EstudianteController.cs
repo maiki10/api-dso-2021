@@ -27,7 +27,7 @@ namespace ApiEstudiantes.Controllers
 
             try
             {
-                return Ok(context.estudiante.Include(e => e.persona).ToList());
+                return Ok(context.estudiante.Include(e => e.persona).Include(e=> e.carrera).ToList());
             }
             catch (Exception ex)
             {

@@ -24,15 +24,29 @@ namespace ApiEstudiantes.Controllers
         public ActionResult GetAll()
         {
 
+            //try
+            //{
+            //    return Ok(context.usuario.Include(u => u.persona).ToList());
+                
+
+            //}
+            //catch (Exception ex)
+            //{
+            //    return BadRequest(ex.Message);
+            //}
             try
             {
-                return Ok(context.usuario.ToList());
+                return Ok(context.usuario.Include(u => u.tipoUsuario).Include(u => u.persona).ToList());
             }
-            catch (Exception ex)
+            catch
+            (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
+
         }
+        
+        
         [HttpGet("{id}", Name = "GtById")]
         public ActionResult GetById(int id)
         {
