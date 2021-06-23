@@ -27,13 +27,28 @@ namespace ApiEstudiantes.Controllers
 
             try
             {
-                return Ok(context.estudiante.Include(e => e.persona).Include(e=> e.carrera).ToList());
+                return Ok(context.estudiante.Include(e => e.persona).Include(e => e.carrera).ToList());
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
+
+        [HttpGet("{id}")]
+        public ActionResult Get(int id)
+        {
+            try
+            {
+                var estudiante = context.estudiante.Include(e => e.persona).Include(e => e.carrera).FirstOrDefault(e => e.id == id);
+                return Ok(estudiante);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
         [HttpGet("{id}", Name = "GetByI")]
         public ActionResult GetById(int id)
         {
